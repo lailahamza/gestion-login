@@ -26,6 +26,7 @@ public class LoginController {
 	@Autowired
 	RoleService roleService;
 	
+//	@GetMapping("/login")
 	@RequestMapping(value="/login",method = RequestMethod.GET)
 	public String loginPage() {
 		

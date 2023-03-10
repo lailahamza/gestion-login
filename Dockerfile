@@ -1,15 +1,13 @@
-FROM openjdk:11-jdk-slim
-# Set the working directory to /app
-#WORKDIR /app
+FROM adoptopenjdk/openjdk11:alpine-slim
 
-# Copy the application JAR file into the container at /app
-COPY target/GestionLogin-0.0.1-SNAPSHOT.jar GestionLogin-0.0.1-SNAPSHOT.jar
-#COPY ./target/spring-0.0.1-SNAPSHOT.jar /app
+WORKDIR /app
 
-# Exposing port 8080
+COPY ./ ./
+
+RUN apk update && apk add maven
+
+RUN mvn clean package -DskipTests
+
 EXPOSE 8080
 
-# Run the application when the container starts
-CMD ["java", "-jar", "GestionLogin-0.0.1-SNAPSHOT.jar"]
-
-#
+CMD ["java", "-jar", "target/GestionLogin-0.0.1-SNAPSHOT.jar", "-Dspring-boot.run.profiles=mysql"]
